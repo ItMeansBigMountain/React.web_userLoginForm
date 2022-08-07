@@ -23,9 +23,17 @@ const LoginForm = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email_input)
     ) { return (true) }
 
+    alert("You have entered an invalid email address!")
     return (false)
   }
 
+  function ValidatePassword() {
+    if (password_input.length < 6) {
+      alert("Password must be at least 6 characters.")
+      return false
+    }
+    return true
+  }
 
 
 
@@ -33,13 +41,15 @@ const LoginForm = () => {
     event.preventDefault();
     var email = event.target[0].value
     var password = event.target[1].value
+    let valid = false;
 
-    if (ValidateEmail(email)) {
+
+    if (ValidateEmail() && ValidatePassword()) {
       //ROUTE TO PROFILE PAGE
       alert("Email Verified!")
     }
     else {
-      alert("You have entered an invalid email address!")
+      //STAY ON LOGIN PAGE
     }
 
 
@@ -48,21 +58,24 @@ const LoginForm = () => {
 
   return (
 
+    <>
 
+      <form onSubmit={handleSubmit}>
 
-    <form onSubmit={handleSubmit}>
+        <label>Username:
+          <input onChange={(e) => { setEmail(e.target.value) }} type="text" />
+        </label>
 
-      <label>Username:
-        <input onChange={(e) => { setEmail(e.target.value) }} type="text" />
-      </label>
+        <label>Password:
+          <input onChange={(e) => { setPassword(e.target.value) }} type="text" />
+        </label>
 
-      <label>Password:
-        <input onChange={(e) => { setPassword(e.target.value) }} type="text" />
-      </label>
+        <input type="submit" />
 
-      <input type="submit" />
+      </form>
 
-    </form>
+    </>
+
   )
 }
 
